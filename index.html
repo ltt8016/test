@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name=viewport content="width=device-width, initial-scale=1,maximum-scale=1,user-scalable=no"/>
+    <link type="text/css" rel="stylesheet" href="css/swiper.min.css">
+    <link type='text/css' rel="stylesheet" href="css/style.css">
+    <link type='text/css' rel="stylesheet" href="css/common.css">
+    <link type='text/css' rel="stylesheet" href="css/reset.css">
+</head>
+<body>
+    <header class='header'></header>
+    <section class='contents'>
+        <ul class='content'>
+            <li class='content_slide'>
+                <p class="item">向左滑动<span class="delete">删除</span></p>
+            </li>
+            <li class='content_slide'>
+                <p class="item">向左滑动<span class="delete">删除</span></p>
+            </li>
+            <li class='content_slide'>
+                <p class="item">向左滑动<span class="delete">删除</span></p>
+            </li>
+            <li class='content_slide'>
+                <p class="item">向左滑动<span class="delete">删除</span></p>
+            </li>
+        </ul>
+    </section>
+    <footer class='footer'></footer>
+<script src="jquery.js"></script>
+<script>
+    //touchstart touchmove touchend touches
+    var el1 = document.querySelectorAll('.content_slide');
+    $('.delete').on('click',function () {
+        $(this).parents('.content_slide').remove()
+    });
+    var startX,startY,moveX,moveY,swipeX,swipeY;
+    $(el1).on('touchstart',function (e) {
+        startX = e.touches[0].pageX;
+        startY = e.touches[0].pageY;
+    });
+    $(el1).on('touchmove',function (e) {
+        moveX = e.touches[0].pageX;
+        moveY = e.touches[0].pageY;
+    });
+    var direction;
+    $(el1).on('touchend',function (e) {
+        if(moveX==0 && moveY==0)return;
+        swipeX = moveX - startX;
+        swipeY = moveY - startY;
+        //绝对值
+        if(Math.abs(swipeX/swipeY)>1){
+            direction = swipeX>0? 'right':'left';
+            if(direction=='left'){
+                console.log('滑动左边')
+                $(this).addClass('show')
+            }
+            else{
+               console.log('滑动右边')
+                $(this).removeClass('show')
+            }
+        }
+        moveX = 0;
+        moveY = 0;
+    })
+</script>
+
+</body>
+</html>
